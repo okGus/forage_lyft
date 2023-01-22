@@ -144,8 +144,9 @@ class TestRorschach(unittest.TestCase):
 
         engine = WilloughbyEngine(current_mileage=0, last_service_mileage=0)
         battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
         
-        car = Rorschach(engine, battery)
+        car = Rorschach(engine, battery, tire)
         self.assertTrue(car.needs_service())
 
     def test_battery_should_not_be_serviced(self):
@@ -154,8 +155,9 @@ class TestRorschach(unittest.TestCase):
 
         engine = WilloughbyEngine(current_mileage=0, last_service_mileage=0)
         battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
         
-        car = Rorschach(engine, battery)
+        car = Rorschach(engine, battery, tire)
         self.assertFalse(car.needs_service())
     
     def test_engine_should_be_serviced(self):
@@ -163,8 +165,9 @@ class TestRorschach(unittest.TestCase):
 
         engine = WilloughbyEngine(current_mileage=60001, last_service_mileage=0)
         battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
         
-        car = Rorschach(engine, battery)
+        car = Rorschach(engine, battery, tire)
         self.assertTrue(car.needs_service())
 
     def test_engine_should_not_be_serviced(self):
@@ -172,8 +175,29 @@ class TestRorschach(unittest.TestCase):
 
         engine = WilloughbyEngine(current_mileage=60000, last_service_mileage=0)
         battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
         
-        car = Rorschach(engine, battery)
+        car = Rorschach(engine, battery, tire)
+        self.assertFalse(car.needs_service())
+    
+    def test_tire_should_be_serviced(self):
+        last_service_date = datetime.today().date()
+
+        engine = WilloughbyEngine(current_mileage=0, last_service_mileage=0)
+        battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 1.0, 0.0, 0.0])
+
+        car = Rorschach(engine, battery, tire)
+        self.assertTrue(car.needs_service())
+
+    def test_tire_should_not_be_serviced(self):
+        last_service_date = datetime.today().date()
+
+        engine = WilloughbyEngine(current_mileage=0, last_service_mileage=0)
+        battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
+
+        car = Rorschach(engine, battery, tire)
         self.assertFalse(car.needs_service())
 
 # Refactored TestRorschach
