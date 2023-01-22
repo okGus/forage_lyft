@@ -25,8 +25,9 @@ class TestCalliope(unittest.TestCase):
 
         engine = CapuletEngine(current_mileage=0, last_service_mileage=0)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Calliope(engine, battery)
+        car = Calliope(engine, battery, tire)
         self.assertTrue(car.needs_service())
     
     def test_battery_should_not_be_serviced(self):
@@ -35,8 +36,9 @@ class TestCalliope(unittest.TestCase):
 
         engine = CapuletEngine(current_mileage=0, last_service_mileage=0)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Calliope(engine, battery)
+        car = Calliope(engine, battery, tire)
         self.assertFalse(car.needs_service())
 
     def test_engine_should_be_serviced(self):
@@ -44,8 +46,9 @@ class TestCalliope(unittest.TestCase):
 
         engine = CapuletEngine(current_mileage=30001, last_service_mileage=0)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Calliope(engine, battery)
+        car = Calliope(engine, battery, tire)
         self.assertTrue(car.needs_service())
 
     def test_engine_should_not_be_serviced(self):
@@ -53,8 +56,29 @@ class TestCalliope(unittest.TestCase):
         
         engine = CapuletEngine(current_mileage=30000, last_service_mileage=0)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Calliope(engine, battery)
+        car = Calliope(engine, battery, tire)
+        self.assertFalse(car.needs_service())
+
+    def test_tire_should_be_serviced(self):
+        last_service_date = datetime.today().date()
+        
+        engine = CapuletEngine(current_mileage=0, last_service_mileage=0)
+        battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.9, 0.9, 0.9, 0.4])
+
+        car = Calliope(engine, battery, tire)
+        self.assertTrue(car.needs_service())
+
+    def test_tire_should_not_be_serviced(self):
+        last_service_date = datetime.today().date()
+        
+        engine = CapuletEngine(current_mileage=0, last_service_mileage=0)
+        battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([1.0, 1.0, 0.0, 0.0])
+
+        car = Calliope(engine, battery, tire)
         self.assertFalse(car.needs_service())
 
 # Refactored TestGlissade
@@ -65,8 +89,9 @@ class TestGlissade(unittest.TestCase):
 
         engine = WilloughbyEngine(current_mileage=0, last_service_mileage=0)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Glissade(engine, battery)
+        car = Glissade(engine, battery, tire)
         self.assertTrue(car.needs_service())
 
     def test_battery_should_not_be_serviced(self):
@@ -75,8 +100,9 @@ class TestGlissade(unittest.TestCase):
 
         engine = WilloughbyEngine(current_mileage=0, last_service_mileage=0)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Glissade(engine, battery)
+        car = Glissade(engine, battery, tire)
         self.assertFalse(car.needs_service())
 
     def test_engine_should_be_serviced(self):
@@ -84,8 +110,9 @@ class TestGlissade(unittest.TestCase):
 
         engine = WilloughbyEngine(current_mileage=60001, last_service_mileage=0)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Glissade(engine, battery)
+        car = Glissade(engine, battery, tire)
         self.assertTrue(car.needs_service())
 
     def test_engine_should_not_be_serviced(self):
@@ -93,8 +120,28 @@ class TestGlissade(unittest.TestCase):
 
         engine = WilloughbyEngine(current_mileage=60000, last_service_mileage=0)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Glissade(engine, battery)
+        car = Glissade(engine, battery, tire)
+        self.assertFalse(car.needs_service())
+    
+    def test_tire_should_be_serviced(self):
+        last_service_date = datetime.today().date()
+
+        engine = WilloughbyEngine(current_mileage=0, last_service_mileage=0)
+        battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.9, 0.9, 0.9, 0.4])
+
+        car = Glissade(engine, battery, tire)
+        self.assertTrue(car.needs_service())
+    def test_tire_should_not_be_serviced(self):
+        last_service_date = datetime.today().date()
+
+        engine = WilloughbyEngine(current_mileage=0, last_service_mileage=0)
+        battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([1.0, 1.0, 0.0, 0.0])
+
+        car = Glissade(engine, battery, tire)
         self.assertFalse(car.needs_service())
 
 # Refactored TestPalindrome
