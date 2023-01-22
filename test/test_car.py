@@ -14,6 +14,8 @@ from engine.sternman_engine import SternmanEngine
 from batterys.spindler_battery import SpindlerBattery
 from batterys.nubbin_battery import NubbinBattery
 
+from tire.carrigan import Carrigan
+
 # Refactored TestCalliope
 class TestCalliope(unittest.TestCase):
     def test_battery_should_be_serviced(self):
@@ -182,8 +184,9 @@ class TestThovex(unittest.TestCase):
 
         engine = CapuletEngine(current_mileage=0, last_service_mileage=0)
         battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
 
-        car = Thovex(engine, battery)
+        car = Thovex(engine, battery, tire)
         self.assertTrue(car.needs_service())
     
     def test_battery_should_not_be_serviced(self):
@@ -192,8 +195,9 @@ class TestThovex(unittest.TestCase):
 
         engine = CapuletEngine(current_mileage=0, last_service_mileage=0)
         battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
 
-        car = Thovex(engine, battery)
+        car = Thovex(engine, battery, tire)
         self.assertFalse(car.needs_service())
     
     def test_engine_should_be_serviced(self):
@@ -201,8 +205,9 @@ class TestThovex(unittest.TestCase):
 
         engine = CapuletEngine(current_mileage=30001, last_service_mileage=0)
         battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
 
-        car = Thovex(engine, battery)
+        car = Thovex(engine, battery, tire)
         self.assertTrue(car.needs_service())
     
     def test_engine_should_not_be_serviced(self):
@@ -210,8 +215,29 @@ class TestThovex(unittest.TestCase):
         
         engine = CapuletEngine(current_mileage=30000, last_service_mileage=0)
         battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
 
-        car = Thovex(engine, battery)
+        car = Thovex(engine, battery, tire)
+        self.assertFalse(car.needs_service())
+    
+    def test_tire_should_be_serviced(self):
+        last_service_date = datetime.today().date()
+        
+        engine = CapuletEngine(current_mileage=0, last_service_mileage=0)
+        battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 1.0, 0.0, 0.0])
+
+        car = Thovex(engine, battery, tire)
+        self.assertTrue(car.needs_service())
+
+    def test_tire_should_not_be_serviced(self):
+        last_service_date = datetime.today().date()
+        
+        engine = CapuletEngine(current_mileage=0, last_service_mileage=0)
+        battery = NubbinBattery(last_service_date)
+        tire = Carrigan([0.0, 0.0, 0.0, 0.0])
+
+        car = Thovex(engine, battery, tire)
         self.assertFalse(car.needs_service())
 
 if __name__ == '__main__':
