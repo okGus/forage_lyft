@@ -1,13 +1,10 @@
-from abc import ABC
+# Refactored CapuletEngine
+from dataclasses import dataclass
 
-from car import Car
+@dataclass
+class CapuletEngine:
+    current_milage: int
+    last_service_milage: int
 
-
-class CapuletEngine(Car, ABC):
-    def __init__(self, last_service_date, current_mileage, last_service_mileage):
-        super().__init__(last_service_date)
-        self.current_mileage = current_mileage
-        self.last_service_mileage = last_service_mileage
-
-    def engine_should_be_serviced(self):
-        return self.current_mileage - self.last_service_mileage > 30000
+    def engine_should_be_serviced(self) -> bool:
+        return self.current_milage - self.last_service_milage > 30000
