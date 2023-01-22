@@ -15,6 +15,7 @@ from batterys.spindler_battery import SpindlerBattery
 from batterys.nubbin_battery import NubbinBattery
 
 from tire.carrigan import Carrigan
+from tire.octoprime import Octoprime
 
 # Refactored TestCalliope
 class TestCalliope(unittest.TestCase):
@@ -104,8 +105,9 @@ class TestPalindrome(unittest.TestCase):
 
         engine = SternmanEngine(warning_light_is_on=False)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Palindrome(engine, battery)
+        car = Palindrome(engine, battery, tire)
         self.assertTrue(car.needs_service())
 
     def test_battery_should_not_be_serviced(self):
@@ -114,8 +116,9 @@ class TestPalindrome(unittest.TestCase):
         
         engine = SternmanEngine(warning_light_is_on=False)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Palindrome(engine, battery)
+        car = Palindrome(engine, battery, tire)
         self.assertFalse(car.needs_service())
 
     def test_engine_should_be_serviced(self):
@@ -123,8 +126,9 @@ class TestPalindrome(unittest.TestCase):
         
         engine = SternmanEngine(warning_light_is_on=True)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Palindrome(engine, battery)
+        car = Palindrome(engine, battery, tire)
         self.assertTrue(car.needs_service())
 
     def test_engine_should_not_be_serviced(self):
@@ -132,8 +136,29 @@ class TestPalindrome(unittest.TestCase):
         
         engine = SternmanEngine(warning_light_is_on=False)
         battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.0, 0.0, 0.0, 0.0])
 
-        car = Palindrome(engine, battery)
+        car = Palindrome(engine, battery, tire)
+        self.assertFalse(car.needs_service())
+
+    def test_tire_should_be_serviced(self):
+        last_service_date = datetime.today().date()
+        
+        engine = SternmanEngine(warning_light_is_on=False)
+        battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([0.9, 0.9, 0.9, 0.4])
+
+        car = Palindrome(engine, battery, tire)
+        self.assertTrue(car.needs_service())
+    
+    def test_tire_should_not_be_serviced(self):
+        last_service_date = datetime.today().date()
+        
+        engine = SternmanEngine(warning_light_is_on=False)
+        battery = SpindlerBattery(last_service_date)
+        tire = Octoprime([1.0, 1.0, 0.0, 0.0])
+
+        car = Palindrome(engine, battery, tire)
         self.assertFalse(car.needs_service())
 
 # Refactored TestRorschach
